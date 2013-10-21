@@ -53,9 +53,7 @@ ronin.filters.t = function(value) {
     return /^\s+|\s+$/g.replace(value);
 }
 ```
-
-use in in a dust template:
-
+use it in a dust template:
 ```html
 <p>{title|t}</p>
 ```
@@ -70,9 +68,7 @@ ronin.helpers.truncate = function(chunk, context, bodies, params) {
     }).render(bodies.block, context).untap();
 }
 ```
-
-use in in a dust template:
-
+use it in a dust template:
 ```html
 <p>
     {@truncate length=10}
@@ -80,7 +76,6 @@ use in in a dust template:
     {/truncate}
 </p>
 ```
-
 output:
 ```html
 <p>
