@@ -9,7 +9,7 @@ Ronin CMS
 npm install ronin
 ```
 
-### Useage
+### Usage
 
 ```js
 var http = require('http'),
@@ -31,7 +31,7 @@ app.use(ronin.middleware);
 http.createServer(app).listen(8080);
 ```
 
-### Custom models
+### Custom Models
 
 ```js
 var model = mongoose.Schema({
@@ -46,19 +46,45 @@ var blogPost = mongoose.model('blogpost', model);
 ronin.models.add(blogPost);
 ```
 
-### Custom filters
+### Custom Filters
 
 ```js
-ronin.filters.t = function(value){
+ronin.filters.t = function(value) {
     return /^\s+|\s+$/g.replace(value);
 }
 ```
 
-use in in dust template:
+use in in a dust template:
 
 ```html
 <p>{title|t}</p>
 ```
 
+### Custom Helpers
+```js
+ronin.helpers.truncate = function(chunk, context, bodies, params) {
+    return chunk.tap(function(data) {
+        var arr = data.split(' ');
+        arr.length = params.length;
+        return arr.join(' ') + '...';
+    }).render(bodies.block, context).untap();
+}
+```
 
+use in in a dust template:
+
+```html
+<p>
+    {@truncate length=10}
+    Lorem ipsum dolor sit amet, ius id fierent recteque sententiae, cum at solum utroque. No debet saperet est, te mutat inani possim mel. Mea ne fugit contentiones, duo an aliquid admodum nominati. Eum alia vocibus cu, et vix alia abhorreant.
+    {/truncate}
+</p>
+```
+
+output:
+```html
+<p>
+    Lorem ipsum dolor sit amet, ius id fierent recteque sententiae...
+</p>
+```
 
