@@ -1,4 +1,32 @@
-ronin-cms
-=========
+Ronin CMS
+=====
 
-An express middlware to create a CMS based on formage
+>An Express middleware to create a CMS based on mongoose models, dust template engine and formage as a backend.
+
+### Install
+
+```
+npm install ronin
+```
+
+### Use
+
+```js
+var http = require('http'),
+    express = require('express'),
+    mongoose = require('mongoose'),
+    ronin = require('../lib');
+
+// express app
+var app = express();
+
+// configure ronin
+ronin.mongoose = mongoose, // Mongoose Instance
+ronin.db = 'mongodb://localhost/ronin' // DB Connection String
+
+// initialize ronin CMS
+app.use(ronin.middleware());
+
+// start http server with express app
+http.createServer(app).listen(8080);
+```
