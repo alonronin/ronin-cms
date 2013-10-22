@@ -47,7 +47,7 @@ ronin.theme = 'my_theme'
 
 ### Ronin Middlewares
 
-default middlewares are: config, page, crumbs, post.
+default middlewares are: config, page, crumbs and post.
 adding custom middleware to the `ronin.middlewares` object:
 ```js
 ronin.middlewares.gallery = function(req, res, next){
