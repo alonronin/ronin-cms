@@ -21,11 +21,18 @@ var http = require('http'),
 var app = express();
 
 // configure ronin
-ronin.mongoose = mongoose, // Mongoose Instance
-ronin.db = 'mongodb://localhost/ronin' // DB Connection String
+ronin.mongoose = mongoose, // mongoose Instance
+ronin.admin = { 
+    path: '/admin', // admin path
+    user: 'admin' // username
+    password: 'admin' // password
+}
 
 // initialize ronin CMS
 app.use(ronin.middleware);
+
+// connect to database
+mongoose.connect('mongodb://localhost/ronin');
 
 // start http server with express app
 http.createServer(app).listen(8080);
