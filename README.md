@@ -1,7 +1,7 @@
 Ronin CMS
 =====
 
->An Express middleware to create a CMS based on mongoose models, dust template engine and formage as a backend.
+>An [Express] middleware to create a CMS based on [mongoose] models, [dust] template engine and [formage] as a backend.
 
 ### Install
 
@@ -49,7 +49,7 @@ var path = require('path');
 ronin.themesFolder = path.join(__dirname, 'themes');
 
 // Current Theme
-ronin.theme = ronin.themes.my_theme
+ronin.theme = ronin.themes.my_theme;
 ```
 
 ### Assigning models to template
@@ -57,7 +57,7 @@ ronin.theme = ronin.themes.my_theme
 template is a file inside a theme root folder. a template is assigned to a page in navigation model.
 
 ```js
-ronin.themes.my_theme.about.models = ['content', 'gallery']
+ronin.themes.my_theme.about.models = ['content', 'gallery'];
 ```
 
 ### Ronin Middlewares
@@ -139,3 +139,7 @@ output:
 </p>
 ```
 
+[Express]: http://www.expressjs.com
+[mongoose]: http://www.mongoosejs.com
+[dust]: http://linkedin.github.io/dustjs
+[formage]: https://github.com/Empeeric/formage
