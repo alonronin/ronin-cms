@@ -31,19 +31,55 @@ app.use(ronin.middleware);
 http.createServer(app).listen(8080);
 ```
 
+### Themes (or Templates)
+
+configure the theme folder. if it has a default folder, this theme will be selected.
+
+```js
+var path = require('path');
+
+// Teheme Folder
+ronin.themesFolder = path.join(__dirname, 'themes');
+
+// Current Theme
+ronin.theme = 'my_theme'
+```
+
+### Ronin Middlewares
+
+default middlewares are: config, page, crumbs, post.
+adding custom middleware to the `ronin.middlewares` object:
+```js
+ronin.middlewares.gallery = function(req, res, next){
+    var locals = res.locals;
+    
+    if(req.query.gallery){
+        ronin.models
+            .gallery
+            .findById(req.query.gallery, function(err, result){
+                locals.crumbs.push({title: result.title, url: locals.page.url + '?gallery=' + result._id});
+                locals.gallery = result;
+                next();
+            })
+    } else next();
+};
+```
+
+all default middlewares are in res.locals: `res.locals.page`, `res.locals.crumbs`, etc.
+
 ### Custom Models
 
 ```js
-var model = mongoose.Schema({
+var schema = mongoose.Schema({
     title: String,
     author: String,
     text: String,
     date: Date
 })
 
-var blogPost = mongoose.model('blogpost', model);
+var model = mongoose.model('blogpost', schema);
 
-ronin.models.add(blogPost);
+ronin.models.blogpost = model;
 ```
 
 ### Custom Filters
