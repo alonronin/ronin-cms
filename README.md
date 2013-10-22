@@ -49,7 +49,15 @@ var path = require('path');
 ronin.themesFolder = path.join(__dirname, 'themes');
 
 // Current Theme
-ronin.theme = 'my_theme'
+ronin.theme = ronin.themes.my_theme
+```
+
+### Assigning models to template
+
+template is a file inside a theme root folder. a template is assigned to a page in navigation model.
+
+```js
+ronin.themes.my_theme.about.models = ['content', 'gallery']
 ```
 
 ### Ronin Middlewares
