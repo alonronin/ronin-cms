@@ -21,7 +21,8 @@ var http = require('http'),
 var app = express();
 
 // configure ronin
-ronin.mongoose = mongoose, // mongoose Instance
+ronin.express = express;
+ronin.mongoose = mongoose; // mongoose Instance
 ronin.admin = { 
     path: '/admin', // admin path
     user: 'admin' // username
@@ -29,7 +30,7 @@ ronin.admin = {
 }
 
 // initialize ronin CMS
-app.use(ronin.middleware);
+app.use(ronin());
 
 // connect to database
 mongoose.connect('mongodb://localhost/ronin');
@@ -46,10 +47,10 @@ configure the theme folder. if it has a default folder, this theme will be selec
 var path = require('path');
 
 // Teheme Folder
-ronin.themesFolder = path.join(__dirname, 'themes');
+ronin.cms.themesFolder = path.join(__dirname, 'themes');
 
 // Current Theme
-ronin.theme = ronin.themes.my_theme;
+ronin.cms.theme = ronin.cms.themes.my_theme;
 ```
 
 ### Assigning models to template
@@ -57,7 +58,7 @@ ronin.theme = ronin.themes.my_theme;
 template is a file inside a theme root folder. a template is assigned to a page in navigation model.
 
 ```js
-ronin.themes.my_theme.about.models = ['content', 'gallery'];
+ronin.cms.themes.my_theme.about.models = ['content', 'gallery'];
 ```
 
 ### Ronin Middlewares
@@ -65,11 +66,11 @@ ronin.themes.my_theme.about.models = ['content', 'gallery'];
 default middlewares are: config, page, crumbs and post.
 adding custom middleware to the `ronin.middlewares` object:
 ```js
-ronin.middlewares.gallery = function(req, res, next){
+ronin.cms.middlewares.gallery = function(req, res, next){
     var locals = res.locals;
     
     if(req.query.gallery){
-        ronin.models
+        ronin.cms.models
             .gallery
             .findById(req.query.gallery, function(err, result){
                 locals.crumbs.push({title: result.title, url: locals.page.url + '?gallery=' + result._id});
@@ -94,18 +95,18 @@ var schema = mongoose.Schema({
 
 var model = mongoose.model('blogpost', schema);
 
-ronin.models.blogpost = model;
+ronin.cms.models.blogpost = model;
 ```
 
 ### Adding paths to a pre-defined Schema/model
 ```js
-ronin.models.config.add({ site: { name: String, email: String}, copyrights: String, date: Date }
+ronin.cms.models.config.add({ site: { name: String, email: String}, copyrights: String, date: Date }
 ```
 
 ### Custom Filters
 
 ```js
-ronin.filters.t = function(value) {
+ronin.cms.filters.t = function(value) {
     return /^\s+|\s+$/g.replace(value);
 }
 ```
@@ -116,7 +117,7 @@ use it in a dust template:
 
 ### Custom Helpers
 ```js
-ronin.helpers.truncate = function(chunk, context, bodies, params) {
+ronin.cms.helpers.truncate = function(chunk, context, bodies, params) {
     return chunk.tap(function(data) {
         var arr = data.split(' ');
         arr.length = params.length;
