@@ -82,6 +82,11 @@ var model = mongoose.model('blogpost', schema);
 ronin.models.blogpost = model;
 ```
 
+### Adding paths to a pre-defined Schema/model
+```js
+ronin.models.config.add({ site: { name: String, email: String}, copyrights: String, date: Date }
+```
+
 ### Custom Filters
 
 ```js
